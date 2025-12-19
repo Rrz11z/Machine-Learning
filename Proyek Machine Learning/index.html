@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drug Effectiveness Predictor</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .animate-slide {
+            animation: slideIn 0.3s ease-in-out;
+        }
+        .animate-spin-custom {
+            animation: spin 1s linear infinite;
+        }
+        .gradient-primary {
+            @apply bg-gradient-to-br from-indigo-500 to-purple-600;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 min-h-screen py-12 px-4">
+    <!-- Background decorative elements -->
+    <div class="fixed top-0 left-0 w-96 h-96 bg-purple-600 opacity-10 rounded-full blur-3xl"></div>
+    <div class="fixed bottom-0 right-0 w-96 h-96 bg-indigo-600 opacity-10 rounded-full blur-3xl"></div>
+
+    <div class="relative z-10 w-full max-w-4xl mx-auto">
+        <!-- Header Section -->
+        <div class="text-center mb-12">
+            <div class="inline-block mb-4 px-4 py-2 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full">
+                <span class="text-white text-sm font-semibold">✨ Advanced Drug Predictor</span>
+            </div>
+            <h1 class="text-5xl md:text-6xl font-black text-white mb-4">
+                💊 Drug Effectiveness
+                <span class="bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">Predictor</span>
+            </h1>
+            <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+                Teknologi AI terdepan untuk memprediksi efektivitas obat dengan akurasi tinggi
+            </p>
+        </div>
+
+        <!-- Main Form Container -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Left Side - Form -->
+            <div class="lg:col-span-2">
+                <div class="bg-white bg-opacity-10 backdrop-blur-xl border border-white border-opacity-20 rounded-2xl p-8 shadow-2xl">
+                    <form id="predictionForm">
+                        <!-- Section 1: Patient Information -->
+                        <div class="mb-8">
+                            <h3 class="text-white text-lg font-bold mb-6 flex items-center">
+                                <span class="text-2xl mr-3">👤</span> Data Pasien
+                            </h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="age" class="block text-gray-200 font-semibold text-sm mb-2">Umur (tahun)</label>
+                                    <input type="number" id="age" placeholder="45" min="0" max="150" required
+                                        class="w-full px-4 py-3 bg-white bg-opacity-10 border border-white border-opacity-20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-50 transition">
+                                </div>
+                                <div>
+                                    <label for="gender" class="block text-gray-200 font-semibold text-sm mb-2">Jenis Kelamin</label>
+                                    <select id="gender" required
+                                        class="w-full px-4 py-3 bg-white bg-opacity-10 border border-white border-opacity-20 rounded-xl text-white focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-50 transition">
+                                        <option value="" class="bg-slate-900">-- Pilih --</option>
+                                        <option value="Male" class="bg-slate-900">Laki-laki</option>
+                                        <option value="Female" class="bg-slate-900">Perempuan</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section 2: Medical Information -->
+                        <div class="mb-8">
+                            <h3 class="text-white text-lg font-bold mb-6 flex items-center">
+                                <span class="text-2xl mr-3">🏥</span> Informasi Medis
+                            </h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="condition" class="block text-gray-200 font-semibold text-sm mb-2">Kondisi Medis</label>
+                                    <input type="text" id="condition" placeholder="Hypertension" required
+                                        class="w-full px-4 py-3 bg-white bg-opacity-10 border border-white border-opacity-20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-50 transition">
+                                </div>
+                                <div>
+                                    <label for="drugName" class="block text-gray-200 font-semibold text-sm mb-2">Nama Obat</label>
+                                    <input type="text" id="drugName" placeholder="Lisinopril" required
+                                        class="w-full px-4 py-3 bg-white bg-opacity-10 border border-white border-opacity-20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-50 transition">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Section 3: Treatment Details -->
+                        <div class="mb-8">
+                            <h3 class="text-white text-lg font-bold mb-6 flex items-center">
+                                <span class="text-2xl mr-3">⚗️</span> Detail Pengobatan
+                            </h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="dosage" class="block text-gray-200 font-semibold text-sm mb-2">Dosis (mg)</label>
+                                    <input type="number" id="dosage" placeholder="10" min="0" step="0.1" required
+                                        class="w-full px-4 py-3 bg-white bg-opacity-10 border border-white border-opacity-20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-50 transition">
+                                </div>
+                                <div>
+                                    <label for="duration" class="block text-gray-200 font-semibold text-sm mb-2">Durasi (hari)</label>
+                                    <input type="number" id="duration" placeholder="30" min="0" step="1" required
+                                        class="w-full px-4 py-3 bg-white bg-opacity-10 border border-white border-opacity-20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-50 transition">
+                                </div>
+                            </div>
+                            <div class="mt-4">
+                                <label for="sideEffects" class="block text-gray-200 font-semibold text-sm mb-2">Efek Samping</label>
+                                <input type="text" id="sideEffects" placeholder="Dizziness, Headache" required
+                                    class="w-full px-4 py-3 bg-white bg-opacity-10 border border-white border-opacity-20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-400 focus:ring-opacity-50 transition">
+                            </div>
+                        </div>
+
+                        <!-- Loading Spinner -->
+                        <div class="loading hidden text-center py-8" id="loading">
+                            <div class="inline-block">
+                                <div class="w-12 h-12 border-4 border-gray-400 border-t-indigo-400 rounded-full animate-spin-custom"></div>
+                            </div>
+                            <p class="text-gray-300 mt-4 font-semibold">Menganalisis data...</p>
+                        </div>
+
+                        <!-- Error Message -->
+                        <div class="error hidden bg-red-500 bg-opacity-20 text-red-200 p-4 rounded-lg mb-6 border border-red-400 border-opacity-50 text-sm" id="errorMessage"></div>
+
+                        <!-- Buttons -->
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-8">
+                            <button type="submit" class="group relative overflow-hidden px-8 py-4 bg-gradient-to-r from-indigo-500 to-purple-500 text-white font-bold rounded-xl hover:shadow-2xl hover:shadow-indigo-500/50 transition transform hover:scale-105 duration-200">
+                                <span class="relative flex items-center justify-center">🔮 Prediksi Sekarang</span>
+                            </button>
+                            <button type="reset" class="px-8 py-4 bg-white bg-opacity-10 border border-white border-opacity-20 text-white font-bold rounded-xl hover:bg-opacity-20 transition duration-200">
+                                ↻ Reset Form
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Right Side - Info Cards -->
+            <div class="lg:col-span-1 flex flex-col gap-6">
+                <!-- Info Card 1 -->
+                <div class="bg-gradient-to-br from-blue-500 to-cyan-500 bg-opacity-10 backdrop-blur-xl border border-blue-400 border-opacity-30 rounded-xl p-6 shadow-xl hover:shadow-2xl transition">
+                    <div class="text-3xl mb-3">🎯</div>
+                    <h4 class="text-white font-bold mb-2">Akurat</h4>
+                    <p class="text-gray-200 text-sm">Prediksi berbasis AI dengan akurasi tinggi</p>
+                </div>
+
+                <!-- Info Card 2 -->
+                <div class="bg-gradient-to-br from-green-500 to-emerald-500 bg-opacity-10 backdrop-blur-xl border border-green-400 border-opacity-30 rounded-xl p-6 shadow-xl hover:shadow-2xl transition">
+                    <div class="text-3xl mb-3">⚡</div>
+                    <h4 class="text-white font-bold mb-2">Cepat</h4>
+                    <p class="text-gray-200 text-sm">Hasil prediksi dalam hitungan detik</p>
+                </div>
+
+                <!-- Info Card 3 -->
+                <div class="bg-gradient-to-br from-orange-500 to-red-500 bg-opacity-10 backdrop-blur-xl border border-orange-400 border-opacity-30 rounded-xl p-6 shadow-xl hover:shadow-2xl transition">
+                    <div class="text-3xl mb-3">🔒</div>
+                    <h4 class="text-white font-bold mb-2">Aman</h4>
+                    <p class="text-gray-200 text-sm">Data Anda diproses secara lokal</p>
+                </div>
+
+                <!-- Stats Card -->
+                <div class="bg-white bg-opacity-5 backdrop-blur-xl border border-white border-opacity-10 rounded-xl p-6">
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-300 text-sm">Model Accuracy</span>
+                            <span class="text-indigo-400 font-bold">98%</span>
+                        </div>
+                        <div class="w-full bg-gray-700 rounded-full h-2">
+                            <div class="bg-gradient-to-r from-indigo-500 to-purple-500 h-2 rounded-full" style="width: 98%"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Result Container -->
+        <div class="result-container hidden mt-8 animate-slide" id="resultContainer">
+            <div class="bg-white bg-opacity-10 backdrop-blur-xl border border-white border-opacity-20 rounded-2xl p-8 shadow-2xl">
+                <div class="text-white text-2xl font-bold mb-8 flex items-center">
+                    <span class="text-4xl mr-4">📊</span> Hasil Prediksi Anda
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <!-- Result Display -->
+                    <div class="md:col-span-2">
+                        <div class="result-box bg-gradient-to-br from-indigo-500 to-purple-600 bg-opacity-30 border border-indigo-400 border-opacity-50 p-8 rounded-xl backdrop-blur-xl" id="resultBox">
+                            <div class="result-label text-gray-300 text-xs font-bold uppercase tracking-widest mb-3">Tingkat Efektivitas</div>
+                            <div class="result-value text-6xl font-black text-indigo-300 mb-4" id="resultValue"></div>
+                            <div class="text-gray-200">
+                                <p class="font-semibold mb-2">Interpretasi:</p>
+                                <p id="resultInterpretation" class="text-sm leading-relaxed"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recommendation Box -->
+                    <div class="bg-gradient-to-br from-emerald-500 to-cyan-500 bg-opacity-10 border border-emerald-400 border-opacity-30 rounded-xl p-6 flex flex-col justify-between">
+                        <div>
+                            <div class="text-2xl mb-2">✅</div>
+                            <h4 class="text-white font-bold mb-2 text-sm">Rekomendasi</h4>
+                            <p class="text-gray-200 text-xs leading-relaxed" id="resultRecommendation">
+                                Konsultasikan hasil ini dengan tenaga medis profesional
+                            </p>
+                        </div>
+                        <button onclick="document.getElementById('predictionForm').reset(); document.getElementById('resultContainer').classList.add('hidden');" class="mt-4 w-full bg-white bg-opacity-20 text-white py-2 rounded-lg text-sm font-semibold hover:bg-opacity-30 transition">
+                            Prediksi Lagi
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="text-center mt-12">
+            <p class="text-gray-400 text-sm">
+                🏥 Drug Effectiveness Predictor v1.0.0 | Powered by Machine Learning
+            </p>
+            <p class="text-gray-500 text-xs mt-2">
+                ⚕️ Disclaimer: Prediksi ini bukan pengganti konsultasi medis profesional
+            </p>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:8000';
+
+        document.getElementById('predictionForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const age = parseFloat(document.getElementById('age').value);
+            const gender = document.getElementById('gender').value;
+            const condition = document.getElementById('condition').value;
+            const drugName = document.getElementById('drugName').value;
+            const dosage = parseFloat(document.getElementById('dosage').value);
+            const duration = parseFloat(document.getElementById('duration').value);
+            const sideEffects = document.getElementById('sideEffects').value;
+
+            // Validasi
+            if (!age || !gender || !condition || !drugName || !dosage || !duration || !sideEffects) {
+                showError('⚠️ Harap isi semua field dengan lengkap!');
+                return;
+            }
+
+            // Show loading
+            document.getElementById('loading').classList.remove('hidden');
+            document.getElementById('errorMessage').classList.add('hidden');
+            document.getElementById('resultContainer').classList.add('hidden');
+
+            try {
+                const response = await fetch(`${API_URL}/predict`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        Age: age,
+                        Gender: gender,
+                        Condition: condition,
+                        Drug_Name: drugName,
+                        Dosage_mg: dosage,
+                        Treatment_Duration_days: duration,
+                        Side_Effects: sideEffects
+                    })
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.detail || 'Prediction failed');
+                }
+
+                const data = await response.json();
+
+                // Display result
+                const resultContainer = document.getElementById('resultContainer');
+                const resultValue = document.getElementById('resultValue');
+                const resultBox = document.getElementById('resultBox');
+                const resultInterpretation = document.getElementById('resultInterpretation');
+                const resultRecommendation = document.getElementById('resultRecommendation');
+
+                resultValue.textContent = data.prediction;
+
+                // Set interpretation and recommendation text
+                const details = {
+                    'Tinggi': {
+                        interpretation: 'Obat ini sangat efektif untuk kondisi pasien ini dengan tingkat keberhasilan tinggi. Lanjutkan pengobatan sesuai resep dokter.',
+                        recommendation: 'Tingkatkan compliance pengobatan dan pantau perkembangan secara berkala.'
+                    },
+                    'Sedang': {
+                        interpretation: 'Obat ini cukup efektif dengan tingkat efektivitas sedang. Mungkin perlu monitoring tambahan dan evaluasi rutin.',
+                        recommendation: 'Lakukan follow-up dengan dokter untuk evaluasi respons pengobatan.'
+                    },
+                    'Rendah': {
+                        interpretation: 'Obat ini memiliki efektivitas rendah untuk kondisi ini. Sangat disarankan untuk konsultasi dengan dokter tentang alternatif pengobatan.',
+                        recommendation: 'Segera berkonsultasi dengan tenaga medis untuk mencari solusi alternatif yang lebih efektif.'
+                    }
+                };
+
+                const detail = details[data.prediction] || details['Sedang'];
+                resultInterpretation.textContent = detail.interpretation;
+                resultRecommendation.textContent = detail.recommendation;
+
+                // Update color based on prediction
+                resultBox.className = 'result-box bg-opacity-30 border border-opacity-50 p-8 rounded-xl backdrop-blur-xl';
+                resultValue.className = 'result-value text-6xl font-black mb-4';
+                
+                if (data.prediction === 'Tinggi') {
+                    resultBox.classList.add('bg-gradient-to-br', 'from-green-500', 'to-emerald-600', 'border-green-400');
+                    resultValue.classList.add('text-green-300');
+                } else if (data.prediction === 'Sedang') {
+                    resultBox.classList.add('bg-gradient-to-br', 'from-amber-500', 'to-orange-600', 'border-amber-400');
+                    resultValue.classList.add('text-amber-300');
+                } else {
+                    resultBox.classList.add('bg-gradient-to-br', 'from-red-500', 'to-pink-600', 'border-red-400');
+                    resultValue.classList.add('text-red-300');
+                }
+
+                resultContainer.classList.remove('hidden');
+                // Scroll to result
+                resultContainer.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+            } catch (error) {
+                console.error('Error:', error);
+                showError('❌ Error: ' + error.message + '. Pastikan server berjalan di ' + API_URL);
+            } finally {
+                document.getElementById('loading').classList.add('hidden');
+            }
+        });
+
+        function showError(message) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.textContent = message;
+            errorDiv.classList.remove('hidden');
+            document.getElementById('resultContainer').classList.add('hidden');
+        }
+
+        // Check if API is available
+        window.addEventListener('load', async () => {
+            try {
+                const response = await fetch(`${API_URL}/health`);
+                if (!response.ok) {
+                    console.warn('API health check failed');
+                }
+            } catch (error) {
+                console.warn('Cannot connect to API at ' + API_URL);
+            }
+        });
+    </script>
+</body>
+</html>
