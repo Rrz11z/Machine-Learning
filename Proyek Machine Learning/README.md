@@ -1,5 +1,5 @@
 
-# Machine Learning Example Application
+sa# Machine Learning Example Application
 This GitHub repository contains a comprehensive machine learning project that covers the full stack of data analysis, model training, and deployment using FastAPI for the backend API and HTML/CSS/JavaScript for the frontend interface. The project walks through the entire process, from building a machine learning model using Python to creating an API for real-time predictions, and a user-friendly frontend for interaction.
 
 ## Setup

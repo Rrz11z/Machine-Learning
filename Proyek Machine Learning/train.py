@@ -34,7 +34,7 @@ df['Uses'] = df['Uses'].fillna('')
 # ========== 3. FEATURE CREATION ==========
 # Membuat fitur baru dari data mentah untuk meningkatkan informasi model
 # Hitung bahan komposisi
-df['Num_Ingredients'] = df['Composition'].str.count('\+') + 1
+df['Num_Ingredients'] = df['Composition'].str.count('+') + 1
 
 # Hitung efek samping
 df['Num_Side_Effects'] = df['Side_effects'].str.count(',') + 1

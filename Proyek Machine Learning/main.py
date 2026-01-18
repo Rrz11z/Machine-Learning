@@ -65,8 +65,17 @@ def create_features(data: MedicineData):
     except:
         manufacturer_encoded = 0  # Default untuk produsen yang tidak dikenal
 
+    # Menghitung frekuensi produsen dari dataset
+    df = pd.read_csv('Medicine_Details.csv')
+    manufacturer_counts = df['Manufacturer'].value_counts()
+    manufacturer_frequency = manufacturer_counts.get(data.manufacturer, 0)
+
+    # Apakah merupakan tablet
+    is_tablet = int('tablet' in medicine_name.lower())
+
     return np.array([[num_ingredients, num_side_effects, num_uses,
-                      manufacturer_encoded, medicine_name_length]])
+                      manufacturer_frequency, manufacturer_encoded,
+                      medicine_name_length, is_tablet]])
 
 # ========== ENDPOINT PREDIKSI ==========
 # Mendefinisikan route untuk melakukan prediksi
